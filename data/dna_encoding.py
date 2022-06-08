@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 import math
 import itertools
 import matplotlib.pyplot as plt
@@ -20,16 +19,85 @@ def onehote(sequence):
             [0,0,0,0]])
     return matrix[seq2]
 
+
+def split_train_multi_set (gss, data):
+  for train_index, test_index in gss.split(data):
+    print("index TRAIN:", train_index, "index TEST:", test_index)
+    X_train, X_test = data[train_index], data[test_index]
+    return X_train, X_test
+
+def padding(sequence,maxlen=499):
+    while len(sequence)<maxlen:
+        sequence+="-"
+    return sequence
+
 def preprocessing_ohe(data,maxlen):
     '''Takes in entry a dataframe containing a column named Sequence, containing the DNA sequences,
     Returns X = array of one-hot-encoded matrixes corresponding'''
     #preprocessing X, One hot encoding, padding
     new_features =[]
     for seq in data['Sequence'] :
-        new_features.append(pad_sequences(onehote(seq).T, maxlen=maxlen, padding='post').T)
+        seq = padding(seq)
+        new_features.append(onehote(seq))
     X = np.array(new_features)
     print(f"    Shape of feature : {X.shape}")
     return X
+
+
+################################################################################################################
+#GENERATE MODIFIED SEQUENCES
+################################################################################################################
+def generate_serie_with_sequences_rotated(sequences_serie):
+    rotated_sequences_serie=[]
+    for i in range(len(sequences_serie)):
+        rotated_sequences_serie.append(rotate_sequence(sequences_serie[i]))
+    return rotated_sequences_serie
+
+def generate_serie_with_sequences_mutated(sequences_serie,percentage_range=(2,8),mutation_type="not_neutral"):
+    mutated_sequences_serie=[]
+    for i in range(len(sequences_serie)):
+        mutated_sequences_serie.append(mutate_sequence(sequences_serie[i],percentage_range=percentage_range,mutation_type=mutation_type))
+    return mutated_sequences_serie
+
+def mutate_sequence(sequence,percentage_range=(2,8),mutation_type="not_neutral"):
+    mutation_rate=np.random.uniform(percentage_range[0],percentage_range[1])
+    dict_mutations = {'0':'A','1':'T','2':'C','3':'G'}
+    new_sequence = ""
+    #Pour chaque lettre, on tire entre 0 et 100 : si tirage <= mutation_rate alors on mute la lettre
+    for i in range(len(sequence)):
+        key=np.random.uniform(0,100)
+        new_letter=sequence[i]
+        if key <= mutation_rate:
+            new_letter_key=str(np.random.randint(4))
+            new_letter=dict_mutations[new_letter_key]
+            if mutation_type == "not_neutral":
+                while new_letter == sequence[i]:
+                    new_letter_key=str(np.random.randint(4))
+                    new_letter=dict_mutations[new_letter_key]
+            #if Complementary ?
+        new_sequence+=new_letter
+    return new_sequence
+
+def rotate_sequence(sequence):
+    '''Generates a random rotation of the sequence'''
+    cut_position=np.random.randint(0,len(sequence)-1)
+    seq_start=sequence[0:cut_position]
+    seq_end=sequence[cut_position:len(sequence)]
+    rotated_sequence=seq_end+seq_start
+    return rotated_sequence
+
+def generate_samples(genome,sample_length,n_samples):
+    list_samples=[]
+    for i in range(n_samples):
+        cut_position=np.random.randint(0,(len(genome)-sample_length-1))
+        sample=genome[cut_position:cut_position+sample_length]
+        list_samples.append(sample)
+    return list_samples
+
+
+
+
+
 
 ################################################################################################################
 #ENCODING DNA IN FREQUENCY MATRIXES
@@ -148,8 +216,10 @@ def remove_unknown_letters(df):
 #########################################################################################################################
 
 def plot_image_of_sequence(sequence,k,map_type,cmap='viridis'):
-    matrix=matrix_frequencies(sequence,k,map_type)
+    wordmap=initialize_word_map(k=k,map_type=map_type)
+    matrix=matrix_frequencies(sequence,k,word_map=wordmap)
     plt.imshow(matrix, cmap=cmap)
+    plt.colorbar()
 
 
 def print_10_random_viroids_and_viruses(df):
