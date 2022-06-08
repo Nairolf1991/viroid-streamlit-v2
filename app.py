@@ -1,10 +1,6 @@
 ### imports
-from calendar import c
-from ctypes import alignment
-from pickletools import markobject
 import streamlit as st
 from PIL import Image
-import base64
 import pandas as pd
 import numpy as np
 import requests

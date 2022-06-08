@@ -7,6 +7,10 @@ wheel>=0.29
 # data science
 numpy
 pandas
+matplotlib
+requests
+itertools
+math
 
 # tests/linter
 # black
@@ -34,3 +38,7 @@ streamlit
 
 # model
 #tensorflow
+
+
+# image
+PIL
