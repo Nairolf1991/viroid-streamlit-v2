@@ -8,7 +8,7 @@ import base64
 import pandas as pd
 import numpy as np
 import requests
-import dna_encoding as enc
+import data.dna_encoding as enc
 import matplotlib.pyplot as plt
 
 
