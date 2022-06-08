@@ -150,7 +150,7 @@ else:
     st.markdown("""## Demo""")
     # streamlit => API
     seq = st.text_input('Upload une sequence ARN', 'GCAT')
-    url = 'http://localhost:8000/viroid'
+    url = 'https://viroid-docker-image-pvgqbd4luq-ew.a.run.app/viroid'
     if seq is not None:
         params = {
             "seq": seq}
