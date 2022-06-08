@@ -37,7 +37,3 @@ streamlit
 
 # model
 #tensorflow
-
-
-# image
-PIL
