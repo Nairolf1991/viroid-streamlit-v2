@@ -9,7 +9,6 @@ numpy
 pandas
 matplotlib
 requests
-itertools
 math
 
 # tests/linter
