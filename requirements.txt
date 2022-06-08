@@ -9,6 +9,7 @@ numpy
 pandas
 matplotlib
 requests
+python-math
 
 # tests/linter
 # black
