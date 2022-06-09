@@ -95,7 +95,7 @@ if item_select == 'Transformation':
     if col2.button('Generate sequence'):
             df = get_dataframe_data()
             random_result = df.sample(1).reset_index()
-            st.write(random_result['Sequence'][0])
+            st.write(random_result[['Sequence', 'IsViroid']][0])
 
     # image flèche 1
     col1, col2, col3 = st.columns(3)
