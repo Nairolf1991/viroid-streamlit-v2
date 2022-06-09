@@ -166,10 +166,10 @@ else:
             col2.write(f'{round(viroid_resp, 2)} % ({viroid_resp})')
             if float(viroid_resp/100) < 0.5:
                 col1.markdown("""### Result :""")
-                col2.markdown("""### That's not a viroid !""")
+                col2.markdown("""### That's probably not a viroid !""")
             else:
                 col1.markdown("""### Result :""")
-                col2.markdown("""### That's a viroid !""")
+                col2.markdown("""### That's probably a viroid !""")
         else:
             st.write("error de Loup: ", response.status_code)
 
