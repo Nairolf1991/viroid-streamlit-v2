@@ -113,7 +113,7 @@ if item_select == 'Transformation':
     col2.image(image, caption='', width=200)
 
     # button matrice
-    st.markdown(""" 👉 On met tous les mots possibles dans une matrice  :""")
+    st.markdown(""" 👉 On met tous les mots possibles dans une matrice (GCAT)  :""")
 
     # on fait une matrice des mots
     if random_result is not None:
