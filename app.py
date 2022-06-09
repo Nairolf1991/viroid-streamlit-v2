@@ -92,7 +92,7 @@ if item_select == 'Transformation':
 
     # bouton "generate sequence" au centre
     col1, col2, col3 = st.columns(3)
-    if col2.button('Generate sequence'):
+    if col2.button('Séquence aléatoire'):
             df = get_dataframe_data()
             random_result = df.sample(1).reset_index()
             st.write(random_result[['Sequence', 'IsViroid']])
@@ -144,6 +144,14 @@ if item_select == 'Transformation':
 ### CODE FOR PAGE DEMO ####
 else:
     st.markdown("""## Demo""")
+    # bouton "generate sequence" au centre
+    col1, col2, col3 = st.columns(3)
+    if col2.button('Séquence aléatoire'):
+            df = get_dataframe_data()
+            random_result = df.sample(1).reset_index()
+            st.write(random_result[['Sequence', 'IsViroid']])
+
+
     # streamlit => API
     seq = st.text_input('Upload une sequence ARN', 'GCAT')
     url = 'https://viroid-docker-image-pvgqbd4luq-ew.a.run.app/viroid'
