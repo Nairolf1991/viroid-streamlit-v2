@@ -143,14 +143,14 @@ if item_select == 'Transformation':
 
 ### CODE FOR PAGE DEMO ####
 else:
-    st.markdown("""## Demo""")
+
     # bouton "generate sequence" au centre
     col1, col2, col3 = st.columns(3)
     if col2.button('Séquence aléatoire'):
             df = get_dataframe_data()
             random_result = df.sample(1).reset_index()
             st.write(random_result[['Sequence', 'IsViroid']])
-
+    st.markdown("""## Demo""")
 
     # streamlit => API
     seq = st.text_input('Upload une sequence ARN', 'GCAT')
@@ -161,9 +161,9 @@ else:
         response = requests.get(url, params=params)
         if response.status_code ==200:
             col1, col2 = st.columns(2)
-            viroid_resp = round(float(response.json())*100, 2)
+            viroid_resp = float(response.json())*100
             col1.write("""Probability of being a viroid:""")
-            col2.write(f'{viroid_resp} %')
+            col2.write(f'{round(viroid_resp, 2)} % ({viroid_resp})')
             if float(viroid_resp/100) < 0.5:
                 col1.markdown("""### Result :""")
                 col2.markdown("""### That's not a viroid !""")
