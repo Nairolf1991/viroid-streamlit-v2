@@ -21,7 +21,7 @@ st.markdown("""# *Bio informatique : Les séquences ARN des viroids vs celles  d
 ### SIDEBAR LOGO Le wagon ####
 # title sidebar
 with st.sidebar:
-    original_title = '<p style="font-family:sans-serif; color:white; font-size: 30px;">Data Science  Viroids Project</p>'
+    original_title = '<p style="font-family:sans-serif; color:green; font-size: 30px;">Data Science  Viroids Project</p>'
     st.markdown(original_title, unsafe_allow_html=True)
 
 # image wagon
